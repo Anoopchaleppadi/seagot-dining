@@ -1,16 +1,50 @@
-// Update this page (the content is just a fallback if you fail to update the page)
+import { useRef, useState } from "react";
+import HeroSection from "@/components/HeroSection";
+import InfoStrip from "@/components/InfoStrip";
+import MenuSection from "@/components/MenuSection";
+import FloatingCart from "@/components/FloatingCart";
+import OrderForm from "@/components/OrderForm";
+import Footer from "@/components/Footer";
+import { useCart } from "@/hooks/useCart";
 
-// IMPORTANT: Fully REPLACE this with your own code
-const PlaceholderIndex = () => {
-  // PLACEHOLDER: Replace this entire return statement with the user's app.
-  // The inline background color is intentionally not part of the design system.
+const Index = () => {
+  const menuRef = useRef<HTMLDivElement>(null);
+  const orderRef = useRef<HTMLDivElement>(null);
+  const { cart, addItem, removeItem, getQuantity, totalItems, totalPrice, clearCart } = useCart();
+  const [showForm, setShowForm] = useState(false);
+
+  const scrollToMenu = () => {
+    menuRef.current?.scrollIntoView({ behavior: "smooth" });
+  };
+
+  const scrollToOrder = () => {
+    setShowForm(true);
+    setTimeout(() => orderRef.current?.scrollIntoView({ behavior: "smooth" }), 100);
+  };
+
+  const handleOrderPlaced = () => {
+    clearCart();
+    setShowForm(false);
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
   return (
-    <div className="flex min-h-screen items-center justify-center" style={{ backgroundColor: '#fcfbf8' }}>
-      <img data-lovable-blank-page-placeholder="REMOVE_THIS" src="/placeholder.svg" alt="Your app will live here!" />
+    <div className="min-h-screen bg-background">
+      <HeroSection onStartOrdering={scrollToMenu} />
+      <InfoStrip />
+      <div ref={menuRef}>
+        <MenuSection getQuantity={getQuantity} addItem={addItem} removeItem={removeItem} />
+      </div>
+      {showForm && (
+        <div ref={orderRef}>
+          <OrderForm cart={cart} totalPrice={totalPrice} onOrderPlaced={handleOrderPlaced} />
+        </div>
+      )}
+      <div className="pb-24" />
+      <Footer />
+      <FloatingCart totalItems={totalItems} totalPrice={totalPrice} onProceed={scrollToOrder} />
     </div>
   );
 };
-
-const Index = PlaceholderIndex;
 
 export default Index;
