@@ -23,7 +23,7 @@ const Footer = () => (
         </a>
       </div>
 
-      <p className="text-xs text-muted-foreground/40 pt-4">A SGT MARKETING TEAM</p>
+      <p className="text-xs text-muted-foreground/40 pt-4"> SGT MARKETING TEAM</p>
     </div>
   </footer>
 );
