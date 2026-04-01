@@ -29,7 +29,7 @@ const Navbar = ({ onScrollToMenu }: NavbarProps) => {
           <motion.a
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
-            href="tel:09747440404"
+            href="tel:09747330303"
             className="flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs sm:text-sm font-medium text-muted-foreground hover:text-foreground hover:bg-primary/10 transition-colors"
           >
             <Phone className="w-3.5 h-3.5 text-primary" />
