@@ -13,7 +13,7 @@ const Footer = () => (
           <Phone className="w-3.5 h-3.5 text-primary" /> 097473 30303
         </a>
         <a href="tel:09747880808" className="glass-card px-4 py-2 flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors">
-          <Phone className="w-3.5 h-3.5 text-primary" /> 09747880808
+          <Phone className="w-3.5 h-3.5 text-primary" /> 097478 80808
         </a>
         <a href="https://wa.me/919747880808" target="_blank" rel="noopener noreferrer" className="glass-card px-4 py-2 flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors">
           <MessageCircle className="w-3.5 h-3.5 text-primary" /> WhatsApp
