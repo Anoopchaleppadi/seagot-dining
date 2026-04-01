@@ -9,6 +9,16 @@ interface MenuSectionProps {
   removeItem: (id: string) => void;
 }
 
+const cardVariants = {
+  hidden: { opacity: 0, y: 24, scale: 0.95 },
+  visible: (i: number) => ({
+    opacity: 1,
+    y: 0,
+    scale: 1,
+    transition: { delay: i * 0.06, duration: 0.4, ease: "easeOut" },
+  }),
+};
+
 const MenuSection = ({ getQuantity, addItem, removeItem }: MenuSectionProps) => {
   const [active, setActive] = useState<string>(categories[0]);
 
@@ -46,24 +56,37 @@ const MenuSection = ({ getQuantity, addItem, removeItem }: MenuSectionProps) => 
       <AnimatePresence mode="wait">
         <motion.div
           key={active}
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
-          exit={{ opacity: 0, y: -10 }}
-          transition={{ duration: 0.3 }}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 0.2 }}
           className="grid grid-cols-1 sm:grid-cols-2 gap-4"
         >
-          {filtered.map((item) => {
+          {filtered.map((item, i) => {
             const qty = getQuantity(item.id);
+            const Icon = item.icon;
             return (
               <motion.div
                 key={item.id}
-                layout
-                whileHover={{ scale: 1.02 }}
-                className="glass-card p-4 flex items-center justify-between gap-3"
+                custom={i}
+                variants={cardVariants}
+                initial="hidden"
+                animate="visible"
+                whileHover={{ scale: 1.03, boxShadow: "0 8px 32px hsl(43 74% 52% / 0.15)" }}
+                className="glass-card p-4 flex items-center gap-4 cursor-default"
               >
+                {/* Food Icon */}
+                <motion.div
+                  className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center shrink-0"
+                  whileHover={{ rotate: [0, -10, 10, 0] }}
+                  transition={{ duration: 0.5 }}
+                >
+                  <Icon className="w-6 h-6 text-primary" />
+                </motion.div>
+
                 <div className="flex-1 min-w-0">
                   <h3 className="font-semibold text-foreground truncate">{item.name}</h3>
-                  <p className="text-primary font-bold mt-1">₹{item.price}</p>
+                  <p className="text-primary font-bold mt-0.5">₹{item.price}</p>
                 </div>
 
                 <div className="flex items-center gap-2 shrink-0">
@@ -78,8 +101,8 @@ const MenuSection = ({ getQuantity, addItem, removeItem }: MenuSectionProps) => 
                       </motion.button>
                       <motion.span
                         key={qty}
-                        initial={{ scale: 1.3 }}
-                        animate={{ scale: 1 }}
+                        initial={{ scale: 1.4, color: "hsl(43 74% 62%)" }}
+                        animate={{ scale: 1, color: "hsl(43 74% 52%)" }}
                         className="w-6 text-center font-bold text-primary"
                       >
                         {qty}
@@ -95,6 +118,7 @@ const MenuSection = ({ getQuantity, addItem, removeItem }: MenuSectionProps) => 
                   ) : (
                     <motion.button
                       whileTap={{ scale: 0.9 }}
+                      whileHover={{ scale: 1.08 }}
                       onClick={() => addItem(item)}
                       className="flex items-center gap-1.5 px-4 py-2 rounded-full bg-primary/15 text-primary text-sm font-semibold hover:bg-primary/25 transition-colors"
                     >
