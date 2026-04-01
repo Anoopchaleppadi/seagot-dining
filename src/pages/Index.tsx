@@ -1,5 +1,6 @@
 import { useRef, useState } from "react";
 import HeroSection from "@/components/HeroSection";
+import Navbar from "@/components/Navbar";
 import InfoStrip from "@/components/InfoStrip";
 import MenuSection from "@/components/MenuSection";
 import FloatingCart from "@/components/FloatingCart";
@@ -30,6 +31,7 @@ const Index = () => {
 
   return (
     <div className="min-h-screen bg-background">
+      <Navbar onScrollToMenu={scrollToMenu} />
       <HeroSection onStartOrdering={scrollToMenu} />
       <InfoStrip />
       <div ref={menuRef}>
